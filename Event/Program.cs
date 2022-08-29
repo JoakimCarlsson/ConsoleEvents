@@ -1,3 +1,12 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿var builder = Host.CreateDefaultBuilder(args);
 
-Console.WriteLine("Hello, World!");
+builder.ConfigureServices(x =>
+{
+    x.AddTransient<IEventService, EventService>();
+    x.AddHostedService<WorkerService>();
+});
+
+var app = builder.Build();
+
+
+app.Run();
