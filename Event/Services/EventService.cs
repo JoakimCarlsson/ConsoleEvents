@@ -1,9 +1,11 @@
-﻿namespace Event.Services;
+﻿using System.Collections.ObjectModel;
+
+namespace Event.Services;
 
 public class EventService : IEventService
 {
     public EventHandler<ValueChangedEventArgs>? OnCounterChanged { get; set; }
-
+    public ObservableCollection<string> ObservableCollection { get; } = new();
     public int Counter { get; private set; }
 
     public void IncrementCounter()
@@ -19,14 +21,23 @@ public class EventService : IEventService
             });
         }
     }
+    
+    public void AddToObservableCollection(string item)
+    {
+        ObservableCollection.Add(item);
+    }
+    
+    public void ClearObservableCollection()
+    {
+        ObservableCollection.Clear();
+    }
 }
 
 public interface IEventService
 {
-    public int Counter { get; }
-
     public void IncrementCounter();
     public EventHandler<ValueChangedEventArgs>? OnCounterChanged { get; set; }
+    public ObservableCollection<string> ObservableCollection { get; } 
 }
 
 public sealed class ValueChangedEventArgs : EventArgs
